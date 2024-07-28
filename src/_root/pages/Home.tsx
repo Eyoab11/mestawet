@@ -6,7 +6,7 @@ import { Models } from "appwrite";
 
 const Home = () => {
 
-  const { data: posts, isPending: isPostLoading, isError: isErrorPosts } = useGetRrecentPosts();
+  const { data: posts, isPending: isPostLoading } = useGetRrecentPosts();
   return (
     <div className=" flex flex-1">
       <div className="home-container">
