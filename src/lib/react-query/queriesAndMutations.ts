@@ -189,19 +189,23 @@ export const useDeletePost = () => {
     })
 }
 
-
 export const useGetPosts = () => {
     return useInfiniteQuery({
         queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
         queryFn: getInfinitePosts,
         getNextPageParam: (lastPage) => {
-            if(lastPage && lastPage.documents.length === 0) return null;
+            // Ensure lastPage is defined and documents array exists
+            if (!lastPage || !lastPage.documents || lastPage.documents.length === 0) {
+                return null;
+            }
 
-            const lastId = lastPage.documents[lastPage?.documents.length - 1 ].$id;
+            // Ensure lastId is a number if your API expects it to be
+            const lastId = Number(lastPage.documents[lastPage.documents.length - 1].$id);
 
-            return lastId;
-        }
-    })
+            // Check if lastId can be converted to a number and return it or return null
+            return isNaN(lastId) ? null : lastId;
+        },
+    });
 }
 
 export const useSearchPosts = (searchTerm : string) => {
