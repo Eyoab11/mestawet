@@ -1,10 +1,10 @@
 import GridPost from "@/components/shared/GridPost";
 import Loader from "@/components/shared/Loader";
 import SearchResults from "@/components/shared/SearchResults";
-import { Input } from "@/components/ui/input"
+import { Input } from "@/components/ui/input";
 import useDebounce from "@/hooks/useDebounce";
 import { useGetPosts, useSearchPosts } from "@/lib/react-query/queriesAndMutations";
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 const Explore = () => {
@@ -31,12 +31,11 @@ const Explore = () => {
     const shouldShowSearchResults = searchValue !== '';
     const shouldShowPosts = !shouldShowSearchResults && posts.pages.every((item) => item?.documents?.length === 0);
 
-
     return (
         <div className="explore-container">
             <div className="explore-inner_container">
                 <h2 className="h3-bold md:h2-bold w-full">Search Posts</h2>
-                <div className="flex gap-1 px-4 w-full rounded-lg ">
+                <div className="flex gap-1 px-4 w-full rounded-lg">
                     <img src="/assets/icons/search.svg" alt="search" width={24} height={24} />
 
                     <Input
@@ -66,7 +65,9 @@ const Explore = () => {
                 ) : shouldShowPosts ? (
                     <p className="text-light-4 mt-10 text-center w-full">End of posts</p>
                 ) : posts.pages.map((item, index) => (
-                    <GridPost key={`page-${index}`} posts={item.documents} />
+                    item ? (
+                        <GridPost key={`page-${index}`} posts={item.documents} />
+                    ) : null
                 ))}
             </div>
 

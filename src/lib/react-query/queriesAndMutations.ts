@@ -188,7 +188,6 @@ export const useDeletePost = () => {
         }
     })
 }
-
 export const useGetPosts = () => {
     return useInfiniteQuery({
         queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
@@ -199,12 +198,16 @@ export const useGetPosts = () => {
                 return null;
             }
 
-            // Ensure lastId is a number if your API expects it to be
-            const lastId = Number(lastPage.documents[lastPage.documents.length - 1].$id);
+            // Get the last document's ID and ensure it's a number
+            const lastDocument = lastPage.documents[lastPage.documents.length - 1];
+            
+            // Convert lastDocument.$id to a number if necessary
+            const lastId = Number(lastDocument.$id);
 
-            // Check if lastId can be converted to a number and return it or return null
+            // Check if lastId is a valid number
             return isNaN(lastId) ? null : lastId;
         },
+        initialPageParam: 0, // Provide the initial page parameter if necessary
     });
 }
 
